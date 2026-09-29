@@ -1,5 +1,8 @@
 import express from "express";
-import { createTransactionController } from "../controllers/transaction.controller.js";
+import {
+  createTransactionController,
+  createInitialFundsTransaction,
+} from "../controllers/transaction.controller.js";
 import auth from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
@@ -10,5 +13,15 @@ const router = express.Router();
  */
 
 router.post("/", auth.authMiddleware, createTransactionController);
+
+/**
+ * - POST /api/transaction/system/initial-funds
+ */
+
+router.post(
+  "/system/initial-funds",
+  auth.authSystemUserMiddleware,
+  createInitialFundsTransaction,
+);
 
 export default router;
